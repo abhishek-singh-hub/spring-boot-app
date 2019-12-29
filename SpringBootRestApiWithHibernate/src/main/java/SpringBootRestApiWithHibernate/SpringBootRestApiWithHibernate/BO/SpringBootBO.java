@@ -11,5 +11,5 @@ public interface SpringBootBO {
 	void saveEmployeeDetail(Employee employee);
 	List<Student> getStudentDetail();
 	List<Employee> getEmployeeDetail();
-	void saveStudentDetail(Employee student);
+	void saveStudentDetail(Student student);
 }

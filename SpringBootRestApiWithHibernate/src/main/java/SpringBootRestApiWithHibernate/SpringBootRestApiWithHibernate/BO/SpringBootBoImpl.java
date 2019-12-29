@@ -32,5 +32,9 @@ public class SpringBootBoImpl implements SpringBootBO {
 		List<Student> studentDetailList =  springBootDao.getStudentDetail();
 		return studentDetailList;
 	}
+	public void saveStudentDetail(Student student) {
+		logger.info("SpringBootBoImpl :-> saveStudentDetail()");
+		springBootDao.saveStudentDetail(student);
+	}
 
 }

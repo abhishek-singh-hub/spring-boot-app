@@ -10,5 +10,5 @@ public interface SpringBootDAO {
 	List<Employee> getEmployeeDetail();
 	List<Student> getStudentDetail();
 	void saveEmployeeDetail(Employee employee);
-
+	void saveStudentDetail(Student student);
 }

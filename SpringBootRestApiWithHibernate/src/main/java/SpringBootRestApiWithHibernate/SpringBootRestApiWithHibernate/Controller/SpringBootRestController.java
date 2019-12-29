@@ -16,7 +16,7 @@ import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Employe
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Student;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/restapi")
 public class SpringBootRestController {
 	@Autowired
@@ -42,7 +42,7 @@ public class SpringBootRestController {
 	}
 	
 	@RequestMapping("/saveStudentDetail")
-	public String saveStudentDetail(@RequestBody Employee student) {
+	public String saveStudentDetail(@RequestBody Student student) {
 		springBootBo.saveStudentDetail(student);
 		return null;
 	}

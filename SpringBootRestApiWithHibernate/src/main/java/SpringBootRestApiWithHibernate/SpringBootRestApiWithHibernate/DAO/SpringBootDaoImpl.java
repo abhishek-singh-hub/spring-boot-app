@@ -41,4 +41,9 @@ public class SpringBootDaoImpl implements SpringBootDAO {
 		logger.info("SpringBootDaoImpl :--> saveEmployeeDetail()");
 		employeeRepository.save(employee);
 	}
+
+	public void saveStudentDetail(Student student) {
+		logger.info("SpringBootDaoImpl :--> saveStudentDetail()");
+		studentRepository.save(student);
+	}
 }
