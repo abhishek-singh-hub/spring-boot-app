@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="studentdetail")
 public class Student {
 	@Id
 	private Integer id;

@@ -36,5 +36,10 @@ public class SpringBootBoImpl implements SpringBootBO {
 		logger.info("SpringBootBoImpl :-> saveStudentDetail()");
 		springBootDao.saveStudentDetail(student);
 	}
+	@Override
+	public Student getStudentDetailById(Integer studentId) {
+		logger.info("SpringBootBoImpl :-> getStudentDetailById()");
+		return springBootDao.getStudentDetailById(studentId);
+	}
 
 }

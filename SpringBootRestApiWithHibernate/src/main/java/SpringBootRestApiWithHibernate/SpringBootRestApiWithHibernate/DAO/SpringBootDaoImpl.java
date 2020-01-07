@@ -3,8 +3,8 @@ package SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DAO;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +14,23 @@ import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Employe
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.EmployeeRepository;
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Student;
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.StudentRepository;
+import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.hibernate.HibernateDbDaoSupport;
 
 @Component
 public class SpringBootDaoImpl implements SpringBootDAO {
 	
-	@Autowired
-	private EntityManager entityManager;
+	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	@Autowired
 	private StudentRepository studentRepository;
+	@Autowired
+	private HibernateDbDaoSupport hibernateDbDaoSupport;
 	
 	public List<Employee> getEmployeeDetail() {
 		logger.info("SpringBootDaoImpl :--> getEmpDetail()");
-		Query query = entityManager.createQuery("from Employee");
+		javax.persistence.Query query = hibernateDbDaoSupport.getEntityManager().createQuery("from Employee");
 		return query.getResultList();
 	}
 	
@@ -45,5 +47,13 @@ public class SpringBootDaoImpl implements SpringBootDAO {
 	public void saveStudentDetail(Student student) {
 		logger.info("SpringBootDaoImpl :--> saveStudentDetail()");
 		studentRepository.save(student);
+	}
+
+	@Override
+	public Student getStudentDetailById(Integer studentId) {
+		logger.info("SpringBootDaoImpl :--> saveStudentDetail()");
+		Query query = hibernateDbDaoSupport.getSession().createQuery("from Student where id=:id");
+		query.setParameter("id", studentId);
+		return (Student) query.uniqueResult();
 	}
 }
