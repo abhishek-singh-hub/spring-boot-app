@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DAO.SpringBootDAO;
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Employee;
@@ -16,26 +17,35 @@ public class SpringBootBoImpl implements SpringBootBO {
 	private SpringBootDAO springBootDao;
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Transactional
+	@Override
 	public void saveEmployeeDetail(Employee employee) {
 		logger.info("SpringBootBoImpl :-> saveEmployeeDetail()");
 		springBootDao.saveEmployeeDetail(employee);
 		
 	}
+	
+	@Override
 	public List<Employee> getEmployeeDetail() {
 		logger.info("SpringBootBoImpl :-> getEmpDetail()");
 		List<Employee> employeeDetailList =  springBootDao.getEmployeeDetail();
 		return employeeDetailList;
 	}
-
+	
+	@Override
 	public List<Student> getStudentDetail() {
 		logger.info("SpringBootBoImpl :-> getStudentDetail()");
 		List<Student> studentDetailList =  springBootDao.getStudentDetail();
 		return studentDetailList;
 	}
+	
+	@Transactional
+	@Override
 	public void saveStudentDetail(Student student) {
 		logger.info("SpringBootBoImpl :-> saveStudentDetail()");
 		springBootDao.saveStudentDetail(student);
 	}
+	
 	@Override
 	public Student getStudentDetailById(Integer studentId) {
 		logger.info("SpringBootBoImpl :-> getStudentDetailById()");
