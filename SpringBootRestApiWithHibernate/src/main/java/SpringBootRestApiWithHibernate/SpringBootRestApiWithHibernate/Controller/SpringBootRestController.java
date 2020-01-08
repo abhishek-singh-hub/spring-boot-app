@@ -2,15 +2,17 @@ package SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.Controller
 
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
 
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.BO.SpringBootBO;
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Employee;
@@ -28,57 +30,66 @@ public class SpringBootRestController {
 		return "Welcome to Spring Rest Server";
 	}
 	
-	@RequestMapping("/getEmpDetail")
-	public String getEmployeeDetail() {
+	@RequestMapping(value = "/getEmpDetail", method = {RequestMethod.GET}, produces = "application/json")
+	public ResponseEntity getEmployeeDetail() {
 		try {
-			Gson gson = new Gson();
 			List<Employee> empDetailList = springBootBo.getEmployeeDetail();
-			return gson.toJson(empDetailList);
-		} catch(Exception e) {
+			if (empDetailList.size() == 0) {
+				return new ResponseEntity<String>("No Record Found.", HttpStatus.OK);
+			}
+			return new ResponseEntity<List<Employee>>(empDetailList, HttpStatus.OK);
+		} catch (Exception e) {
 			e.printStackTrace();
-			return "Exception occured while getting the student Detail!"+e.getMessage();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
 		}
 	}
 	
-	@RequestMapping("/saveEmpDetail")
-	public String saveEmployeeDetail(@RequestBody Employee employee) {
+	@RequestMapping(value = "/saveEmpDetail", method = {RequestMethod.POST}, consumes = "application/json")
+	public ResponseEntity saveEmployeeDetail(@RequestBody Employee employee) {
 		try {
 			springBootBo.saveEmployeeDetail(employee);
-			return "Detail Saved Successfully";
-		} catch(Exception e) {
+			return new ResponseEntity<String>("Detail Saved Successfully", HttpStatus.OK);
+		} catch (Exception e) {
 			e.printStackTrace();
-			return e.getMessage();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
 		}
 	}
 	
-	@RequestMapping("/getStudentDetail")
-	public List<Student> getStudentDetail() {
+	@RequestMapping(value  = "/getStudentDetail", method = {RequestMethod.GET} , produces = "application/json")
+	public ResponseEntity getStudentDetail() {
 		try {
 			List<Student> studentDetail = springBootBo.getStudentDetail();
-			return studentDetail;
-		} catch(Exception e){
+			if(studentDetail.size()==0) {
+				return new ResponseEntity<String>("No Record Found.", HttpStatus.OK);
+			}
+			return new ResponseEntity<List<Student>>(studentDetail, HttpStatus.OK);
+		} catch (Exception e){
 			e.printStackTrace();
-			return null;
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
 		}
 	}
 	
-	@RequestMapping("/saveStudentDetail")
+	@RequestMapping(value = "/saveStudentDetail", method = {RequestMethod.POST}, consumes = "application/json")
 	public String saveStudentDetail(@RequestBody Student student) {
 		try {
 			springBootBo.saveStudentDetail(student);
 			return "Detail Saved Successfully";
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return e.getMessage();
 		}
 	}
-	@RequestMapping("/getstudentdetailbyId/{studentId}")
-	public Student getDetailById(@PathVariable(value = "studentId") Integer studentId) {
+	@RequestMapping(value = "/getstudentdetailbyId/{studentId}", method = {RequestMethod.GET}, produces = "application/json")
+	public ResponseEntity getDetailById(@PathVariable(value = "studentId") Integer studentId) {
 		try {
-			return springBootBo.getStudentDetailById(studentId);
+			Student studentDetail = springBootBo.getStudentDetailById(studentId);
+			if(studentDetail == null) {
+				return new ResponseEntity<String>("No Record Found with id :"+studentId, HttpStatus.OK);
+			} 
+			return new ResponseEntity<Student>(studentDetail, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
 		}
 	}
 }
