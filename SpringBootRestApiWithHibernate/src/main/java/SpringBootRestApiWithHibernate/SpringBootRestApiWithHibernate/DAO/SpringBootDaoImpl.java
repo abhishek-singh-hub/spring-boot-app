@@ -49,7 +49,6 @@ public class SpringBootDaoImpl implements SpringBootDAO {
 		studentRepository.save(student);
 	}
 
-	@Override
 	public Student getStudentDetailById(Integer studentId) {
 		logger.info("SpringBootDaoImpl :--> saveStudentDetail()");
 		Query query = hibernateDbDaoSupport.getSession().createQuery("from Student where id=:id");
