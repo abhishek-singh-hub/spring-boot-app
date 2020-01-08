@@ -27,34 +27,58 @@ public class SpringBootRestController {
 	public String getServerName() {
 		return "Welcome to Spring Rest Server";
 	}
+	
 	@RequestMapping("/getEmpDetail")
 	public String getEmployeeDetail() {
-		Gson gson = new Gson();
-		List<Employee> empDetailList = springBootBo.getEmployeeDetail();
-		return gson.toJson(empDetailList);
+		try {
+			Gson gson = new Gson();
+			List<Employee> empDetailList = springBootBo.getEmployeeDetail();
+			return gson.toJson(empDetailList);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "Exception occured while getting the student Detail!"+e.getMessage();
+		}
 	}
 	
 	@RequestMapping("/saveEmpDetail")
 	public String saveEmployeeDetail(@RequestBody Employee employee) {
-		System.out.println("AKS");
-		System.out.println(employee.getId());
-		springBootBo.saveEmployeeDetail(employee);
-		return null;
+		try {
+			springBootBo.saveEmployeeDetail(employee);
+			return "Detail Saved Successfully";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 	
 	@RequestMapping("/getStudentDetail")
 	public List<Student> getStudentDetail() {
-		List<Student> studentDetail = springBootBo.getStudentDetail();
-		return studentDetail;
+		try {
+			List<Student> studentDetail = springBootBo.getStudentDetail();
+			return studentDetail;
+		} catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@RequestMapping("/saveStudentDetail")
 	public String saveStudentDetail(@RequestBody Student student) {
-		springBootBo.saveStudentDetail(student);
-		return null;
+		try {
+			springBootBo.saveStudentDetail(student);
+			return "Detail Saved Successfully";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 	@RequestMapping("/getstudentdetailbyId/{studentId}")
 	public Student getDetailById(@PathVariable(value = "studentId") Integer studentId) {
-		return springBootBo.getStudentDetailById(studentId);
+		try {
+			return springBootBo.getStudentDetailById(studentId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
