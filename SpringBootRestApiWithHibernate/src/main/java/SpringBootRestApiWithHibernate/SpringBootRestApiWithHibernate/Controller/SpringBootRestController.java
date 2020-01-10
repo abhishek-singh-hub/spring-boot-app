@@ -1,8 +1,8 @@
 package SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.Controller;
 
 import java.util.List;
+import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.mongodb.client.MongoCollection;
 
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.BO.SpringBootBO;
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Employee;
@@ -91,5 +93,17 @@ public class SpringBootRestController {
 			e.printStackTrace();
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
 		}
+	}
+	
+	@RequestMapping(value = "/getEmpActivityHistory", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity getEmployeeActivityHistory() {
+		try {
+			List<Map<String, Object>> empActivityHistory = springBootBo.getEmployeeActivityHistory();
+			return new ResponseEntity<List>(empActivityHistory,  HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
+		}
+		
 	}
 }
