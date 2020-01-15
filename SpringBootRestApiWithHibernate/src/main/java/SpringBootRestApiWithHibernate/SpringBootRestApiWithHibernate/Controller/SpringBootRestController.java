@@ -104,7 +104,7 @@ public class SpringBootRestController {
 			List<Map<String, Object>> empActivityHistory = springBootBo.getEmployeeActivityHistory();
 			return new ResponseEntity<List>(empActivityHistory,  HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();//aks
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
 		}
 		

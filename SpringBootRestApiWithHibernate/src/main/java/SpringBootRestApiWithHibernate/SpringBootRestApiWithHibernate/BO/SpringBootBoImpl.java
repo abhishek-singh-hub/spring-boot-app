@@ -64,7 +64,7 @@ public class SpringBootBoImpl implements SpringBootBO {
 
 	@Override
 	public List<Map<String, Object>> getEmployeeActivityHistory() {
-		logger.info("SpringBootBoImpl :-> getEmployeeActivityHistory()");
+		logger.info("SpringBootBoImpl :-> getEmployeeActivityHistory()");//sks
 		List<Map<String, Object>> empActivityHistoryList = new ArrayList<>();
 		MongoConnectionClass mongoConnection = new MongoConnectionClass();
 		FindIterable<Document> collection =  mongoConnection.getMongoDb().getCollection("empActivityHistory").find();
