@@ -7,12 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.mongodb.client.FindIterable;
 
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DAO.SpringBootDAO;
@@ -60,7 +67,7 @@ public class SpringBootBoImpl implements SpringBootBO {
 		logger.info("SpringBootBoImpl :-> getEmployeeActivityHistory()");
 		List<Map<String, Object>> empActivityHistoryList = new ArrayList<>();
 		MongoConnectionClass mongoConnection = new MongoConnectionClass();
-		FindIterable<Document> collection =  mongoConnection.getMongoDb().getCollection("javaCol").find();
+		FindIterable<Document> collection =  mongoConnection.getMongoDb().getCollection("empActivityHistory").find();
 		Iterator<Document> iterator = collection.iterator();
 		while(iterator.hasNext()) {
 			Document document = iterator.next();
@@ -68,6 +75,19 @@ public class SpringBootBoImpl implements SpringBootBO {
 			empActivityHistoryList.add(map);
 		}
 		return empActivityHistoryList;
+	}
+
+	@Override
+	public void saveEmployeeActivity(JSONArray empActivityArray) throws JSONException {
+		logger.info("SpringBootBoImpl :-> saveEmployeeActivity()");
+		Gson gson = new Gson();
+		ArrayList<Document> documentList = new ArrayList<>();
+		MongoConnectionClass mongoConnection = new MongoConnectionClass();
+		for(int i=0; i<empActivityArray.length(); i++) {
+			JSONObject jsonObject = (JSONObject) empActivityArray.get(i);
+			documentList.add(Document.parse(jsonObject.toString()));
+		}
+		mongoConnection.getMongoDb().getCollection("empActivityHistory").insertMany(documentList);
 	}
 
 }
