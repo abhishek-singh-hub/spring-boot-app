@@ -3,6 +3,8 @@ package SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.BO;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.DTO.Employee;
@@ -15,4 +17,5 @@ public interface SpringBootBO {
 	void saveStudentDetail(Student student);
 	Student getStudentDetailById(Integer studentId);
 	List<Map<String, Object>> getEmployeeActivityHistory();
+	void saveEmployeeActivity(JSONArray empActivityArray) throws JSONException;
 }

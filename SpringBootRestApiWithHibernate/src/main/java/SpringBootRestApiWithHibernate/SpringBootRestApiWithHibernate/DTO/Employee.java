@@ -15,12 +15,18 @@ public class Employee {
 	@Column
 	private String empName;
 	@Column
-	private String designation;
+	private String empDesignation;
 	@Column
 	private Date dateOfJoining;
 	
 	public Integer getId() {
 		return id;
+	}
+	public String getEmpDesignation() {
+		return empDesignation;
+	}
+	public void setEmpDesignation(String empDesignation) {
+		this.empDesignation = empDesignation;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -30,12 +36,6 @@ public class Employee {
 	}
 	public void setEmpName(String empName) {
 		this.empName = empName;
-	}
-	public String getDesigation() {
-		return designation;
-	}
-	public void setDesigation(String designation) {
-		this.designation = designation;
 	}
 	public Date getDateOfJoining() {
 		return dateOfJoining;
