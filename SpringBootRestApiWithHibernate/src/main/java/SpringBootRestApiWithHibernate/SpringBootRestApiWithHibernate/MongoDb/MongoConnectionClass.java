@@ -1,15 +1,11 @@
 package SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.MongoDb;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 
 import SpringBootRestApiWithHibernate.SpringBootRestApiWithHibernate.common.ApplicationProperties;
